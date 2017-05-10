@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- * 输入框小练习
- * 
  * @author Jarvis
  */
 public class TFFrame extends JFrame {
