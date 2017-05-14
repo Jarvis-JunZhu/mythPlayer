@@ -1,8 +1,11 @@
 package mythPlayer.litter.util;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 
 public class OperateFile {
 	/**
@@ -41,5 +44,39 @@ public class OperateFile {
 		}
 		content = builder.toString();
 		return content;
+	}
+
+	/**
+	 * 将内容保存到指定的文件中
+	 * 
+	 * @param content
+	 *            文件的内容
+	 * @param fileName
+	 *            文件名字（包含绝对路径）
+	 */
+	public static void saveFile(String content, String fileName) {
+		FileOutputStream fileOutputStream = null;
+		Writer writer = null;
+		try {
+			fileOutputStream = new FileOutputStream(fileName);
+			writer = new OutputStreamWriter(fileOutputStream);
+			writer.write(content);
+
+			writer.flush();
+			fileOutputStream.flush();
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (writer != null) {
+					writer.close();
+				}
+				if (fileOutputStream != null) {
+					fileOutputStream.close();
+				}
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+
+		}
 	}
 }

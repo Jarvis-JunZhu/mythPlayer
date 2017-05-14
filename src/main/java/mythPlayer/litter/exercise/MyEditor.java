@@ -32,6 +32,7 @@ public class MyEditor extends JFrame {
 	private JMenuItem	mntmExit;
 	private JMenuItem	mntmAbout;
 	private JScrollPane	scrollPane;
+	private String		fileName;
 
 	/**
 	 * Launch the application.
@@ -119,11 +120,32 @@ public class MyEditor extends JFrame {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectFile = fileChooser.getSelectedFile();
 					String fileName = selectFile.getAbsolutePath();
+					MyEditor.this.fileName = fileName;
 					System.out.println(fileName);
 					String content = OperateFile.readFile(fileName);
 					System.out.println(content);
 					txtContent.setText(content);
 				}
+			} else if (source == mntmSave) {
+
+				if (fileName == null || "".equals(fileName)) {
+					// 选择目录保存
+					JFileChooser fileChooser = new JFileChooser();
+					int result = fileChooser.showSaveDialog(null);
+					if (result == JFileChooser.APPROVE_OPTION) {
+						fileName = fileChooser.getSelectedFile().getAbsolutePath();
+					} else {
+						return;
+					}
+				}
+				String content = txtContent.getText();
+				OperateFile.saveFile(content, fileName);
+
+			} else if (source == mntmNewFile) {
+				// 清空编辑器
+				txtContent.setText("");
+				// 重置fileName
+				MyEditor.this.fileName = null;
 			}
 		}
 
